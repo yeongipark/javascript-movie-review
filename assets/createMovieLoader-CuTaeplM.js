@@ -105,43 +105,19 @@ function Header() {
   $headerContainer.appendChild($header);
   return $headerContainer;
 }
-function Hero() {
-  const backgroundHero = createElement("div", {
-    id: "hero",
-    className: "background-container"
-  });
-  backgroundHero.innerHTML = `
-
-    <div class="overlay" aria-hidden="true" ></div>
-       <div class="top-rated-container">
-            <div class="top-rated-movie">
-               <div class="rate">
-                 <img src="./images/star_empty.png" class="star" />
-                 <span class="rate-value">9.5</span>
-               </div>
-               <div class="title">인사이드 아웃2</div>
-              <button class="primary detail">자세히 보기</button>
-             </div>
-  </div>
-`;
-  return backgroundHero;
-}
 function $(element) {
   return document.querySelector(element);
 }
-function mountHeader() {
-  const $wrap = $("#wrap");
-  $wrap == null ? void 0 : $wrap.prepend(Header());
-}
-function mountMovieItemList(movieItemList2) {
+function mountMovieItemList(movieItemList) {
   const $container = $("#thumbnail-container");
   $container == null ? void 0 : $container.insertBefore(
-    movieItemList2.$el,
+    movieItemList.$el,
     $container.querySelector(".skeleton-list")
   );
 }
 const URLS = {
   popularMovieUrl: "https://api.themoviedb.org/3/movie/popular",
+  searchMovieUrl: "https://api.themoviedb.org/3/search/movie",
   detailMovieUrl: "https://api.themoviedb.org/3/movie/"
 };
 const defaultOptions = {
@@ -410,10 +386,6 @@ function MovieItemList() {
     render: render2
   };
 }
-function mountHero() {
-  const $wrap = $("#wrap");
-  $wrap == null ? void 0 : $wrap.prepend(Hero());
-}
 const $skeletonList = document.querySelector(".skeleton-list");
 function hideSkeleton() {
   hideElement($skeletonList);
@@ -455,7 +427,7 @@ const Toast = {
 function createMovieLoader(url, searchTerm) {
   let page = 1;
   return async () => {
-    const newQueryObject = { ...defaultQueryObject, page: String(page) };
+    const newQueryObject = searchTerm ? { query: searchTerm, ...defaultQueryObject, page: String(page) } : { ...defaultQueryObject, page: String(page) };
     let response = null;
     try {
       response = await fetchUrl(
@@ -478,39 +450,14 @@ function createMovieLoader(url, searchTerm) {
     return { results, isLastPage: page > pageLimit };
   };
 }
-const movieItemList = MovieItemList();
-let observer;
-async function initIndexApp() {
-  const loader = createMovieLoader(URLS.popularMovieUrl);
-  mountIndexPageUI();
-  await loadAndDisplayMovies({ loader });
-  registerObserver({ loader });
-}
-function registerObserver({ loader }) {
-  observer = new IntersectionObserver(async ([entry]) => {
-    if (entry.isIntersecting) {
-      await loadAndDisplayMovies({ loader });
-    }
-  });
-  const sentinel = $("#sentinel");
-  if (sentinel) {
-    observer.observe(sentinel);
-  }
-}
-async function loadAndDisplayMovies({ loader }) {
-  showSkeleton();
-  const { results, isLastPage } = await loader();
-  hideSkeleton();
-  if (isLastPage && observer) {
-    const sentinel = $("#sentinel");
-    if (sentinel) observer.unobserve(sentinel);
-    observer.disconnect();
-  }
-  movieItemList.render(results);
-}
-function mountIndexPageUI() {
-  mountHeader();
-  mountHero();
-  mountMovieItemList(movieItemList);
-}
-initIndexApp();
+export {
+  $,
+  Header as H,
+  MovieItemList as M,
+  URLS as U,
+  createMovieLoader as a,
+  createElement as c,
+  hideSkeleton as h,
+  mountMovieItemList as m,
+  showSkeleton as s
+};
