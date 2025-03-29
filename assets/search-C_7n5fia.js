@@ -20,9 +20,9 @@ let observer;
 async function initSearchApp() {
   const query = getSearchParams("query");
   const loader = createMovieLoader(URLS.searchMovieUrl, query);
+  registerObserver({ loader });
   mountIndexPageUI();
   await loadAndDisplayMovies({ loader });
-  registerObserver({ loader });
 }
 function getSearchParams(key) {
   return new URLSearchParams(window.location.search).get(key) ?? "";
