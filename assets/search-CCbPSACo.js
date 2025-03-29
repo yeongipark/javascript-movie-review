@@ -1,4 +1,4 @@
-import { H as Header, $, c as createElement, M as MovieItemList, m as mountMovieItemList, s as showSkeleton, h as hideSkeleton, a as createMovieLoader, U as URLS } from "./createMovieLoader-CuTaeplM.js";
+import { H as Header, $, c as createElement, M as MovieItemList, m as mountMovieItemList, s as showSkeleton, h as hideSkeleton, a as createMovieLoader, U as URLS } from "./createMovieLoader-BdezxUbn.js";
 function mountSearchTitle() {
   document.body.prepend(Header());
   const query = new URLSearchParams(window.location.search).get("query");
