@@ -95,7 +95,7 @@ function Header() {
   });
   $logo.addEventListener("click", () => {
     redirectWithQuery({
-      path: "/index.html"
+      path: "./index.html"
     });
   });
   $searchButton.appendChild($searchImg);

@@ -1,4 +1,4 @@
-import { c as createElement, $, H as Header, M as MovieItemList, m as mountMovieItemList, s as showSkeleton, h as hideSkeleton, a as createMovieLoader, U as URLS } from "./createMovieLoader-BdezxUbn.js";
+import { c as createElement, $, H as Header, M as MovieItemList, m as mountMovieItemList, s as showSkeleton, h as hideSkeleton, a as createMovieLoader, U as URLS } from "./createMovieLoader-C3aHVrRT.js";
 function Hero() {
   const backgroundHero = createElement("div", {
     id: "hero",
